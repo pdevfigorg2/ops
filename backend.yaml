@@ -1,22 +1,20 @@
+# manifests for backend
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: project1-dev 
+  name: project1-dev
   labels:
     app.kubernetes.io/name: project1-dev
     app.kubernetes.io/part-of: project1
-    app.kubernetes.io/environment: dev
 ---
-# http route
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: project1-dev-frontend-httproute
+  name: project1-dev-backend-httproute
   namespace: project1-dev
   labels:
     app.kubernetes.io/name: project1-dev
     app.kubernetes.io/part-of: project1
-    app.kubernetes.io/environment: dev
 spec:
   parentRefs:
     - kind: Gateway
@@ -26,89 +24,82 @@ spec:
     - "dev.project1.com"
   rules:
     - matches:
-      - path:
+      - path: 
           type: PathPrefix
-          value: /
+          value: /api/v1
       backendRefs:
-        - name: project1-dev-frontend-service
-          port: frontend
+        - name: project1-dev-backend-service
+          port: backend
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: project1-dev-service
+  name: project1-dev-backend-service
   namespace: project1-dev
   labels:
     app.kubernetes.io/name: project1-dev
-    app.kubernetes.io/part-of: Project1
-    app.kubernetes.io/environment: dev
+    app.kubernetes.io/part-of: project1
 spec:
   type: ClusterIP
   selector:
     app.kubernetes.io/name: project1-dev
-    app.kubernetes.io/part-of: Project1
-    app.kubernetes.io/environment: dev
+    app.kubernetes.io/part-of: project1
+    app: backend
   ports:
-    - name: frontend 
+    - name: backend
+      targetPort: 9000
+      port: 9000
       protocol: TCP
-      port: 3000
-      targetPort: frontend 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project1-dev-deployment
+  name: project1-dev-backend-deployment
   namespace: project1-dev
 spec:
   replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: project1-dev
-      app.kubernetes.io/part-of: Project1
-      app.kubernetes.io/environment: dev
+      app.kubernetes.io/part-of: project1
+      app: backend
   template:
     metadata:
       labels:
         app.kubernetes.io/name: project1-dev
-        app.kubernetes.io/part-of: Project1
-        app.kubernetes.io/environment: dev
+        app.kubernetes.io/part-of: project1
+        app: backend
     spec:
       containers:
-        - name: frontend
-          image: pdevfig/frontend-temp:0.0.1
-
+        - name: backend
+          image: pdevfig/backend-temp:0.0.1
           ports:
-            - name: frontend 
-              containerPort: 8080
+            - name: backend
+              containerPort: 9000
               protocol: TCP
-            
-          resources:
+          resources: 
             requests:
               cpu: 100m
               memory: 128Mi
             limits:
               cpu: 200m
-              memory: 256Mi
-
+              memory: 128Mi
           startupProbe:
             httpGet:
-              path: /
-              port: frontend
+              path: /healthz
+              port: backend 
             initialDelaySeconds: 10
-            failureThreshold: 30
             periodSeconds: 5
-          
+            failureThreshold: 5
           readinessProbe:
             httpGet:
-              path: /
-              port: frontend
-            failureThreshold: 10
-            periodSeconds: 5
-          
+              path: /healthz
+              port: backend
+            periodSeconds: 10
+            failureThreshold: 5
           livenessProbe:
             httpGet:
-              path: /
-              port: frontend
+              path: /healthz
+              port: backend
+            periodSeconds: 20
             failureThreshold: 2
-            initialDelaySeconds: 30
-            periodSeconds: 5
