@@ -92,21 +92,21 @@ spec:
           startupProbe:
             httpGet:
               path: /healthz
-              port: 3000
+              port: 8080
             failureThreshold: 30
-            periodSeconds: 10
+            periodSeconds: 5
           
           readinessProbe:
             httpGet:
               path: /healthz
-              port: 3000
+              port: 8080
             failureThreshold: 10
             periodSeconds: 5
           
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 3000
+              port: 8080
             failureThreshold: 2
             initialDelaySeconds: 30
             periodSeconds: 5
