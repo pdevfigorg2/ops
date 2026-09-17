@@ -20,7 +20,7 @@ metadata:
 spec:
   parentRefs:
     - kind: Gateway
-      name: Project1-default-gateway
+      name: project1-default-gateway
       namespace: default
   hostnames:
     - "dev.project1.com"
