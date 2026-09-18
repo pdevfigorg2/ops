@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.io/v1
+kind: HTTPRoute
+metadata:
+  name: project1-env-frontend-httproute
+spec:
+  parentRefs:
+    - name: project1-default-gateway
+      namespace: project1
+  hostnames:
+    - "dev.project1.com"
+  rules:
+    - matches:
+      - paths:
+          type: PathPrefix
+          value: /
+      backendRefs: 
+        - name: project1-env-frontend-service
+          port: 8080

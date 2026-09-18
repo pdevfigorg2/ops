@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project1-env-frontend-deployment
+  labels:
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: frontend
+        app.kubernetes.io/instance: project1-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: pdevfig/backend-temp:0.0.1
+          ports:
+            - name: frontend
+              containerPort: 8080
+              protocol: TCP
+          resources:
