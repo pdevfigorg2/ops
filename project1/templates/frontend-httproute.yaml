@@ -12,6 +12,7 @@ spec:
   parentRefs:
     - name: {{ .Values.project1Gateway.name }}
       namespace: {{ .Values.project1Gateway.namespace }}
+      sectionName: http
   hostnames:
     - "{{ .Values.env }}.project1.com"
   rules:
