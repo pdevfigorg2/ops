@@ -1,3 +1,13 @@
-namespace: project1-staging
+namespace: project1-dev
 
 env: dev
+
+backend:
+  deployment:
+    imageName:
+      tag: 0.0.1
+
+frontend:
+  deployment:
+    imageName:
+      tag: 0.0.1
