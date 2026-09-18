@@ -20,7 +20,7 @@ spec:
     - matches:
       - path:
           type: PathPrefix
-          value: {{ .Values.project1Gateway.matches.bakendPathValue }}
+          value: {{ .Values.project1Gateway.matches.backendPathValue }}
       backendRefs:
         - name: {{ include "project1.nameWithEnv" . }}-backend-service
           port: {{ .Values.backend.service.port }}
