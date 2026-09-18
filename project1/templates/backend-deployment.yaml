@@ -1,7 +1,7 @@
 apiVersion: app/v1
 kind: Deployment
 metadata:
-  name: {{ include "project1.nameWithEnv" }}-backend-deployment
+  name: {{ include "project1.nameWithEnv" . }}-backend-deployment
   labels:
     app.kubernetes.io/name: backend
     app.kubernetes.io/component: project1-backend
@@ -30,7 +30,7 @@ spec:
               protocol: TCP
 
           resources:
-            {{- toYaml .Values.bakend.deployment.container.resources | nindent 12 }}
+            {{- toYaml .Values.backend.deployment.container.resources | nindent 12 }}
           
           startupProbe:
             httpGet:
