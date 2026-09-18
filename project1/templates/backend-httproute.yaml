@@ -1,5 +1,5 @@
 {{- if .Values.project1Gateway.enable -}}
-apiVersion: gateway.networking.io/v1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   #ex: project1-dev-backend-httproute
