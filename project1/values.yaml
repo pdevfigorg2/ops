@@ -10,7 +10,7 @@ project1Gateway:
   name: project1-default-gateway
   namespace: project1
   matches:
-    backendPathValue: /app/v1
+    backendPathValue: /api/v1
     frontendPathValue: /
 
 # backend related common values
