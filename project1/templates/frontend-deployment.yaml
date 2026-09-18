@@ -11,7 +11,7 @@ spec:
 
   selector:
     matchLabels:
-      app.kubernetes.io/name: project1-frontend 
+      app.kubernetes.io/name: frontend 
       app.kubernetes.io/component: project1-frontend
 
   template:
