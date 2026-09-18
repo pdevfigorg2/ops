@@ -18,7 +18,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: frontend
-        app.kubernetes.io/instance: project1-frontend
+        app.kubernetes.io/component: project1-frontend
     spec:
       containers:
         - name: frontend

@@ -16,7 +16,7 @@ spec:
     - "{{ .Values.env }}.project1.com"
   rules:
     - matches:
-      - paths:
+      - path:
           type: PathPrefix
           value: {{ .Values.project1Gateway.matches.frontendPathValue }}
       backendRefs: 
