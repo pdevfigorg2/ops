@@ -10,7 +10,7 @@ spec:
   type: {{ .Values.frontend.service.type }}
   selector:
     app.kubernetes.io/name: frontend 
-    app.kubernetes.io/compnent: project1-frontend
+    app.kubernetes.io/component: project1-frontend
   ports:
     - name: {{ .Values.frontend.service.portName }}
       port: {{ .Values.frontend.service.port }}
