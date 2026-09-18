@@ -21,5 +21,5 @@ spec:
           value: {{ .Values.project1Gateway.matches.frontendPathValue }}
       backendRefs: 
         - name: {{ include "project1.nameWithEnv" . }}-frontend-service
-          port: {{ .Values.backend.service.port }}
+          port: {{ .Values.frontend.service.port }}
 {{- end -}}
