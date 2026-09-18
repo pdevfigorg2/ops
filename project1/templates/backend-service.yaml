@@ -4,13 +4,13 @@ metadata:
   name: {{ include "project1.nameWithEnv" . }}-backend-service
   labels:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/instance: project1-backend
+    app.kubernetes.io/instance: {{ include "project1.nameWithEnv" . }}-backend-service
     {{- include "project1.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.backend.service.type }} 
   selector:
     app.kubernetes.io/name: backend
-    app.kubernetes.io/instance: project1-backend
+    app.kubernetes.io/component: project1-backend
   ports:
     - name: {{ .Values.backend.service.portName }} 
       port: {{ .Values.backend.service.port }}

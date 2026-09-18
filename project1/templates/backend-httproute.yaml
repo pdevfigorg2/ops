@@ -8,7 +8,7 @@ metadata:
     {{- include "project1.labels" . | nindent 4 }}
     app.kubernetes.io/name: bakend
     app.kubernetes.io/component: backend
-    app.kubernetes.io/instance: {{ include "project1.name" . }}
+    app.kubernetes.io/instance: {{ include "project1.nameWithEnv" . }}-backend-httproute
 spec:
   parentRefs:
     - name: {{ .Values.project1Gateway.name }}
@@ -20,7 +20,7 @@ spec:
     - matches:
       - path:
           type: PathPrefix
-          value: {{ .Values.project1Gateway.matches.pathValue }}
+          value: {{ .Values.project1Gateway.matches.bakendPathValue }}
       backendRefs:
         - name: {{ include "project1.nameWithEnv" . }}-backend-service
           port: {{ .Values.backend.service.port }}

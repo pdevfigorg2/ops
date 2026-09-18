@@ -10,7 +10,8 @@ project1Gateway:
   name: project1-default-gateway
   namespace: project1
   matches:
-    pathValue: /app/v1
+    backendPathValue: /app/v1
+    frontendPathValue: /
 
 # backend related common values
 
@@ -60,4 +61,4 @@ frontend:
         limits:
           cpu: 200m
           memory: 256Mi
-      probePath: /healthz
+      probePath: /

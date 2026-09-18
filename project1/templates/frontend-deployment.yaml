@@ -1,10 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project1-env-frontend-deployment
+  name: {{ include "project1.nameWithEnv" . }}-frontend-deployment
   labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/component: project1-frontend
+    {{- include "project1.labels" . | nindent 4 }}  
 spec:
-  replicas: 2
+  replicas: {{ .Values.frontend.deployment.replicas }}
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: project1-frontend 
+      app.kubernetes.io/component: project1-frontend
+
   template:
     metadata:
       labels:
@@ -13,9 +22,34 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: pdevfig/backend-temp:0.0.1
+          image: {{ .Values.frontend.deployment.imageName.owner }}/{{ .Values.frontend.deployment.imageName.repo }}:{{ .Values.frontend.deployment.imageName.tag }}
+          ports:
           ports:
             - name: frontend
-              containerPort: 8080
+              containerPort: {{ .Values.frontend.deployment.container.port }}
               protocol: TCP
+
           resources:
+             {{- toYaml .Values.frontend.deployment.container.resources | nindent 12 }}
+          
+          startupProbe:
+            httpGet:
+              path: {{ .Values.frontend.deployment.container.probePath }}
+              port: {{ .Values.frontend.deployment.container.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 5
+          
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.frontend.deployment.container.probePath }}
+              port: {{ .Values.frontend.deployment.container.port }}
+            periodSeconds: 5
+            failureThreshold: 10
+          
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.frontend.deployment.container.probePath }}
+              port: {{ .Values.frontend.deployment.container.port }}
+            periodSeconds: 5
+            failureThreshold: 2
