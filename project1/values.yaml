@@ -6,7 +6,7 @@ project1Namespace: project1
 env:  ""
 
 project1Gateway:
-  enable: false
+  enable: true 
   name: project1-default-gateway
   namespace: project1
   matches:
