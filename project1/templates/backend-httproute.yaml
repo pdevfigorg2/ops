@@ -1,4 +1,4 @@
-{{- if .Values.project1Gateway -}}
+{{- if .Values.project1Gateway.enable -}}
 apiVersion: gateway.networking.io/v1
 kind: HTTPRoute
 metadata:
@@ -11,16 +11,17 @@ metadata:
     app.kubernetes.io/instance: {{ include "project1.name" }}
 spec:
   parentRefs:
-    - name:  project1-default-gateway
+    - name: {{ .Values.project1Gateway.name }}
       kind: Gateway
-      namespace: project1
+      namespace: {{ .Values.project1Gateway.namespace }}
   hostnames:
-    - "env.project1.com"
+    - "{{ .Values.env }}.project1.com"
   rules:
     - matches:
       - path:
           type: PathPrefix
-          value: /api/v1
+          value: {{ .Values.matches.pathValue }}
       backendRefs:
-        - name: project1-env-backend-service
-          port: 8080
+        - name: {{ include "project1.nameWithEnv" . }}-backend-service
+          port: {{ .Values.backendRefs.port }}
+{{- end -}}
