@@ -1,0 +1,16 @@
+apiVersion: gateway.networking.io/v1
+kind: Gateway
+metadata:
+  name: project1-default-gateway
+  namespace: project1
+spec:
+  gatewayClassName: nginx
+  listeners:
+    - hostname: "*.project1.com"
+      name: http
+      protocol: HTTP
+      port: 80
+      allowdRoutes:
+        namespaces:
+          from: All
+      
