@@ -10,4 +10,4 @@ backend:
 frontend:
   deployment:
     imageName:
-      tag: bb4b731ccf3ec9181995e1caeecc337d458ec674
+      tag: 328b90a9eac85caed0406529eb61e4011d1bc93f
