@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "project1.nameWithEnv" . }}-backend-deployment
+  labels:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/component: project1-backend
+    {{- include "project1.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.backend.deployment.replicas }}
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backend
+      app.kubernetes.io/component: project1-backend 
+  
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: backend
+        app.kubernetes.io/component: project1-backend
+    spec:
+      containers:
+        - name: backend
+          image: {{ .Values.backend.deployment.imageName.owner }}/{{ .Values.backend.deployment.imageName.repo }}:{{ .Values.backend.deployment.imageName.tag }}
+
+          ports:
+            - name: backend
+              containerPort: {{ .Values.backend.deployment.container.port }}
+              protocol: TCP
+
+          resources:
+            {{- toYaml .Values.backend.deployment.container.resources | nindent 12 }}
+          
+          startupProbe:
+            httpGet:
+              path: {{ .Values.backend.deployment.container.probePath }}
+              port: {{ .Values.backend.deployment.container.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 5
+          
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.backend.deployment.container.probePath }}
+              port: {{ .Values.backend.deployment.container.port }}
+            periodSeconds: 5
+            failureThreshold: 10
+          
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.backend.deployment.container.probePath }}
+              port: {{ .Values.backend.deployment.container.port }}
+            periodSeconds: 5
+            failureThreshold: 2
+            
+
+               

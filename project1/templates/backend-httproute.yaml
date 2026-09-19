@@ -1,0 +1,28 @@
+{{- if .Values.project1Gateway.enable -}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  #ex: project1-dev-backend-httproute
+  name: {{ include "project1.nameWithEnv" . }}-backend-httproute
+  labels:
+    {{- include "project1.labels" . | nindent 4 }}
+    app.kubernetes.io/name: bakend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/instance: {{ include "project1.nameWithEnv" . }}-backend-httproute
+spec:
+  parentRefs:
+    - name: {{ .Values.project1Gateway.name }}
+      kind: Gateway
+      namespace: {{ .Values.project1Gateway.namespace }}
+      sectionName: http
+  hostnames:
+    - "{{ .Values.env }}.project1.com"
+  rules:
+    - matches:
+      - path:
+          type: PathPrefix
+          value: {{ .Values.project1Gateway.matches.backendPathValue }}
+      backendRefs:
+        - name: {{ include "project1.nameWithEnv" . }}-backend-service
+          port: {{ .Values.backend.service.port }}
+{{- end -}}

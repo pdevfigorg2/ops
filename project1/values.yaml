@@ -1,0 +1,64 @@
+nameOverride: ""
+fullnameOverride: ""
+
+project1Namespace: project1
+
+env:  ""
+
+project1Gateway:
+  enable: true 
+  name: project1-default-gateway
+  namespace: project1
+  matches:
+    backendPathValue: /api/v1
+    frontendPathValue: /
+
+# backend related common values
+
+backend:
+  service:
+    type: ClusterIP
+    portName: backend
+    port: 9000
+    targetPort: 9000
+  
+  deployment:
+    replicas: 2
+    imageName:
+      owner: pdevfig
+      repo: backend-temp
+      tag: 0.0.1
+    container:
+      port: 9000
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 200m
+          memory: 256Mi
+      probePath: /healthz
+
+frontend:
+  service:
+    type: ClusterIP
+    portName: frontend 
+    port: 8080
+    targetPort: 8080 
+  
+  deployment:
+    replicas: 2
+    imageName:
+      owner: pdevfig
+      repo: frontend-temp
+      tag: 0.0.1
+    container:
+      port: 8080 
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 200m
+          memory: 256Mi
+      probePath: /

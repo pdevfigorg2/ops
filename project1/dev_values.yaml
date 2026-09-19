@@ -1,0 +1,13 @@
+namespace: project1-dev
+
+env: dev
+
+backend:
+  deployment:
+    imageName:
+      tag: 0eb6dc393632c0b73f00fbb20310c5815b0b17bd
+
+frontend:
+  deployment:
+    imageName:
+      tag: 61572a70b493d7699d5013be7f456c88904dd84c
