@@ -5,7 +5,7 @@ env: dev
 backend:
   deployment:
     imageName:
-      tag: 31b2c571e8f1d5f8b9798cc273474428d1d19983
+      tag: c70d462993e36f034d55b9941e1a683ccc8cb0a1
 
 frontend:
   deployment:
