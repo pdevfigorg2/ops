@@ -30,9 +30,12 @@ spec:
         - setWeight: 10
         - pause: {} # pause indefinitely
         - setWeight: 25
-        - pause: 10
+        - pause: 
+            duration: 10s
         - setWeight: 50
-        - pause: 10
+        - pause: 
+            duration: 10s
         - setWeight: 75
-        - pause: 10
+        - pause: 
+            duration: 10s
         - setWeight: 100
