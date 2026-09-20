@@ -6,7 +6,7 @@ metadata:
   name: example-rollout
   namespace: default
 spec:
-  replicas: 10
+  replicas: 6
   selector:
     matchLabels:
       app: nginx
