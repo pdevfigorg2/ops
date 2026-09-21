@@ -10,4 +10,4 @@ backend:
 frontend:
   deployment:
     imageName:
-      tag: pr-15-90584e24434f27b0787f8636e3a0bf0092b84395
+      tag: pr-15--6511fe139a34b52c46e827b1b3ca0a5f3691b1af
