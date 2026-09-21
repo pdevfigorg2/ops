@@ -1,0 +1,7 @@
+# This file is generated automatically by Github Actions CI/CD
+env: pr-14
+frontend: 
+  deployment: 
+    imageName: 
+      tag: pr-14-7483a06628ebbb7034b0bbc0d3eefccfcba94d34
+EOF 
