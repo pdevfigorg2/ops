@@ -1,7 +1,13 @@
-# This file is generated automatically by Github Actions CI/CD
-env: pr-15
-frontend: 
-  deployment: 
-    imageName: 
-      tag: pr-15-eff6951983fca83f74c755324fa7f57a7fac8c60
-EOF 
+namespace: project1-dev
+
+env: dev
+
+backend:
+  deployment:
+    imageName:
+      tag: 0eb6dc393632c0b73f00fbb20310c5815b0b17bd
+
+frontend:
+  deployment:
+    imageName:
+      tag: pr-15-90584e24434f27b0787f8636e3a0bf0092b84395
